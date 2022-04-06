@@ -16,6 +16,8 @@ class DriverMap extends StatefulWidget {
 }
 
 class _DriverMapState extends State<DriverMap> {
+  int sc = 1;
+  int ss =22;
   final loc.Location location = loc.Location();
   late GoogleMapController _controller;
   bool _added = false;
@@ -28,8 +30,7 @@ class _DriverMapState extends State<DriverMap> {
     _requestPermission();
     location.changeSettings(interval: 300, accuracy: loc.LocationAccuracy.high);
     location.enableBackgroundMode(enable: true);
-    BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(10,10)),
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(10, 10)),
             'assets/images/school_bus.png')
         .then((onValue) {
       busIcon = onValue;
@@ -84,14 +85,15 @@ class _DriverMapState extends State<DriverMap> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton (
+              ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                primary: Colors.blueGrey,),
-
-                onPressed: () {_getLocation();},
+                  primary: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  _getLocation();
+                },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-
                   children: [
                     Icon(
                       Icons.location_searching_sharp,
@@ -101,15 +103,16 @@ class _DriverMapState extends State<DriverMap> {
                     SizedBox(
                       width: 5,
                     ),
-
                   ],
                 ),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blueGrey,),
-
-                onPressed: () {_listenLocation();},
+                  primary: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  _listenLocation();
+                },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -121,15 +124,16 @@ class _DriverMapState extends State<DriverMap> {
                     SizedBox(
                       width: 5,
                     ),
-
                   ],
                 ),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blueGrey,),
-
-                onPressed: () {_stopListening();},
+                  primary: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  _stopListening();
+                },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -141,25 +145,19 @@ class _DriverMapState extends State<DriverMap> {
                     SizedBox(
                       width: 5,
                     ),
-
                   ],
                 ),
               ),
-
-
             ],
           ),
         ),
       ),
-
-
     );
   }
 
   _getLocation() async {
     try {
       final loc.LocationData _locationResult = await location.getLocation();
-
 
       await FirebaseFirestore.instance.collection('location').doc('user1').set(
         {
